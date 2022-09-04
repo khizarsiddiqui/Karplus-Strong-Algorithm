@@ -1,7 +1,7 @@
 import numpy as np
 import wave, math
 
-# creating wav file
+# creating wav file (for example only)
 
 sRate = 44100
 nSamples = sRate * 5
@@ -17,7 +17,7 @@ file.close()
 # implementing the ring buffer with deque
 
 from collections import deque
-from collections import random
+import random
 
 d = deque(range(10))
 print(d)
@@ -38,7 +38,7 @@ def generateNote(freq):
     sampleRate = 44100
     N = int(sampleRate/freq)
 # initialize ring buffer
-    buf = deque([random.random() - 0.5 for i in range(N)])
+    buf = deque([random.random() - 0.5 for i in range(N)]) # line comprehension
 # initialize samples buffer
     samples = np.array([0]*nSamples, 'float32')
     for i in range(nSamples):
@@ -50,3 +50,18 @@ def generateNote(freq):
 # the maximum value is 32767 for 16-bit
     samples = np.array(samples*32767, 'int16')
     return samples.tostring()
+
+# write data to a WAV file using the Python wave module.
+
+def writeWAVE(fname, data):
+# open file
+    file = wave.open(fname, 'wb')
+# WAV file parameters
+    nChannels = 1
+    sampleWidth = 2
+    frameRate = 44100
+    nFrames = 44100
+# set parameters
+    file.setparams((nChannels, sampleWidth, frameRate, nFrames, 'NONE', 'noncompressed'))
+    file.writeframes(data)
+    file.close()
