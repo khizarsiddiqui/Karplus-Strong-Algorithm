@@ -142,6 +142,7 @@ def main():
                 exit()
 
     # random piano mode
+    # set up keys for playing piano over different tunes (i.e. A, S, D, F, G)
     if args.piano:
         while True:
             for event in pygame.event.get():
